@@ -1,0 +1,115 @@
+@import '../../../../styles/variables';
+@import '../../../../styles/mixins';
+
+.auth-register-page {
+    padding: 4.8rem;
+
+    @media (max-width: 1250px) { padding: 2.4rem 0; }
+
+    h1 {
+        width: 85%;
+        text-align: center;
+        margin: 0 auto;
+    }
+
+    &__form {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        background-color: #21223f;
+        border: 2px solid #AF52DE;
+        border-radius: 2rem;
+        width: 65%;
+        margin: 3.2rem auto;
+        padding: 0 3.2rem 3.2rem;
+        @include flex-columns-center-horizontally;
+
+        @media (max-width: 1250px) { padding: 2.4rem 0; }
+        @media (max-width: 1000px) { padding: 2.4rem 0 4.8rem; }
+        @media (max-width: 800px) { width: 85%; }
+        @media (max-width: 620px) { background-color: transparent; border: none; margin: 0 auto; }
+        
+        &-top {
+            width: 100%;
+            height: auto;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+
+            @media (max-width: 1000px) { @include flex-columns-center-horizontally; }
+
+
+            &-field-block {
+                height: 40px;
+                width: 40%;
+                margin: 3.2rem;
+
+                @media (max-width: 1000px) { width: 80%; }
+                @media (max-width: 420px) { 
+                    width: 95%; 
+                    margin: 4rem 0; 
+    
+                    // Espacer les labels et les inputs
+                    label+.css-5h82ro-MuiInputBase-root-MuiInput-root {
+                        margin-top: 4rem;
+                    }
+                }
+
+            }
+
+            // Grossir les tailles de polices des labels
+            .css-39co7a-MuiFormControl-root-MuiTextField-root label {
+                @media (max-width: 420px) { font-size: 3.2rem; }
+            }
+
+            /* Style adornment pour le champ password */
+            .css-1ysp02-MuiButtonBase-root-MuiIconButton-root {
+                color: $secondary-purple;
+            }
+
+            .css-1umw9bq-MuiSvgIcon-root {
+                font-size: 2.4rem;
+                position: absolute;
+                bottom: -5px;
+                right: 10px
+            }
+        }
+
+        &-bottom {
+            position: relative;
+
+            &-loader {
+                position: absolute;
+                bottom: 2%;
+                right: -80%;
+
+                @media (max-width: 420px) { right: 40%; bottom: -40%; }
+            }
+
+            // Couleur du loader
+            .css-1wxecgq-MuiCircularProgress-root {
+                color: $secondary-purple;
+            }
+
+            button {
+                margin-top: 3.2rem;
+                padding: 1rem 2.4rem;
+
+                @media (max-width: 620px) { padding: 1.2rem 2.4rem; }
+                @media (max-width: 420px) { font-size: 3.2rem; margin-top: 8rem; }
+            }
+        }
+    }
+
+    & > p {
+        margin-top: 4.8rem;
+        text-align: center;
+
+        a {
+            color:$secondary-purple;
+        }
+
+        @media (max-width: 1000px) { margin: 4.8rem 0; }
+
+    }
+}
