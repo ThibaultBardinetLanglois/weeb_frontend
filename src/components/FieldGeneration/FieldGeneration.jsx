@@ -5,7 +5,7 @@ import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
-
+// Composant permettant la génération d'un champ de formulaire basé sur la librairie Materia ui
 const FieldGeneration = (
     label, 
     type, 

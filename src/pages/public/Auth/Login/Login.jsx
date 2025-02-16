@@ -14,6 +14,7 @@ const Login = () => {
     const [modalTitle, setModalTitle] = useState("");
     const [modalMessage, setModalMessage] = useState("");
 
+    /******** HOOKS **********/
     /***** Traitement du champ "email" *****/
     const { email, handleEmailChange, errorEmail, errorEmailMsg, resetEmail } = useEmailField();
     /***** Traitement du champ "password" *****/
