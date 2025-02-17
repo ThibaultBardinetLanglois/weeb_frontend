@@ -49,15 +49,17 @@ Permet de mesurer et d'améliorer les performances de l'application.
 weeb_frontend/
 ├── public/ # Fichiers statiques
 ├── src/ # Code source principal
+│ ├── assets/ # Contient les images et icônes
 │ ├── components/ # Composants réutilisables
-│ ├── pages/ # Pages principales
-│ ├── styles/ # Fichiers de styles (Sass/Emotion)
-│ ├── utils/ # Fonctions utilitaires
 │ ├── hooks/ # Hooks personnalisés
-│ ├── App.js # Point d'entrée principal
-│ ├── index.js # Bootstrapping de l'application
+│ ├── layout/ # Composants pour la mise en page
+│ ├── pages/ # Pages principales
+│ ├── routes/ # fichiers dédiés au routage de l'application
+│ ├── styles/ # Fichiers SCSS avec les règles globales de style
+│ ├── utils/ # Fonctions utilitaires
+│ ├── App.jsx # Point d'entrée principal
+│ ├── index.jsx # Bootstrapping de l'application
 ├── package.json # Configuration des dépendances
-├── .eslintrc.json # Configuration ESLint
 ├── .gitignore # Fichiers à exclure du repository
 └── README.md # Documentation
 
