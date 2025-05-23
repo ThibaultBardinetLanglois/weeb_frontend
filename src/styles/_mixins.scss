@@ -1,0 +1,52 @@
+// groupements de règles réutilisables
+
+@mixin flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin flex-space-beetwen {
+    display: flex;
+    justify-content: space-between;
+}
+
+@mixin flex-space-around {
+    display: flex;
+    justify-content: space-around;
+}
+
+@mixin flex-wrap {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+@mixin flex-columns {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@mixin flex-columns-reverse {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+}
+
+@mixin flex-columns-center-horizontally {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@mixin flex-columns-center-horizontally-and-vertically {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin img-full-fill-parent {
+    width: 100%;
+    height: auto;
+}
