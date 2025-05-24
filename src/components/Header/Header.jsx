@@ -2,11 +2,30 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Header.style.scss';
 
+/**
+ * Header Component
+ * 
+ * This component renders a responsive header with navigation links,
+ * a burger menu for mobile devices, and authentication buttons.
+ * 
+ * Features:
+ * - Responsive navigation bar with burger toggle on smaller screens
+ * - Automatically closes burger menu on navigation when screen is narrow
+ * - Uses React Router's <Link> for client-side routing
+ * 
+ * @returns {JSX.Element} A header section with branding, navigation, and burger menu
+ */
 const Header = () => {
+    // State to track whether the burger menu is open or closed
     const [burgerIsOpen, setBurgerIsOpen] = useState(false);
+
+    // Toggle the burger menu open or closed
     const toggleBurger = () => setBurgerIsOpen(!burgerIsOpen);
 
-    // Fonction qui ferme le burger menu lors du redirection vers une page
+    /**
+     * Closes the burger menu on link click if screen width is 620px or less.
+     * This ensures the menu collapses on mobile navigation.
+     */
     const closeBurgerMenu = () => {
         if (window.innerWidth <= 620) {
             setBurgerIsOpen(false);
@@ -16,6 +35,8 @@ const Header = () => {
     return (
         <div className="header-container">
             <Link to="/" className='header-container__home-link'>Weeb</Link>
+
+            {/* Navigation bar */}
             <header className={`header-container__navbar ${burgerIsOpen ? "change" : ""}`}>
                 <nav>
                     <ul>
@@ -24,6 +45,8 @@ const Header = () => {
                         <li><Link to="/contact" onClick={closeBurgerMenu}>Contact</Link></li>
                     </ul>
                 </nav>
+
+                {/* Auth buttons */}
                 <div className="header-container__navbar_buttons">
                     <Link 
                         to="/login" 
@@ -38,6 +61,7 @@ const Header = () => {
                 </div>
             </header>
 
+            {/* Burger menu button */}
             <div 
                 className={`header-container__burger-block ${burgerIsOpen ? "activate" : ""}`}
                 onClick={toggleBurger}

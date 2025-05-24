@@ -3,6 +3,14 @@ import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 import reportWebVitals from './reportWebVitals';
 
+/**
+ * Entry Point
+ * 
+ * This is the main entry point of the React application.
+ * It renders the root <App /> component inside the HTML element with id="root".
+ * 
+ * Web vitals reporting is included and can be customized for performance tracking.
+ */
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);
 

@@ -6,9 +6,23 @@ import InstagramIcon from '../../assets/icons/instagram.svg';
 import LinkedinIcon from '../../assets/icons/linkedin.svg';
 import './Footer.style.scss';
 
+/**
+ * Footer Component
+ * 
+ * A presentational footer component containing company information,
+ * product and resource links, and social media icons.
+ * 
+ * Structure:
+ * - Top section includes categorized link groups (Product, Solutions, Resources, Company)
+ * - Bottom section includes copyright
+ *   and social media links (Youtube, Facebook, Twitter, Instagram, LinkedIn)
+ * 
+ * @returns {JSX.Element} A footer element with navigational and branding content
+ */
 const Footer = () => {
     return (
         <footer>
+            {/* Top part of the footer: navigation and company links */}
             <div className="footer-top-part">
                 <p>Weeb</p>
                 <div className="footer-top-part__product-block">
@@ -48,6 +62,8 @@ const Footer = () => {
                     </ul>
                 </div>
             </div>
+            
+            {/* Bottom part of the footer: copyright and social links */}
             <div className="footer-bottom-part">
                 <p className='footer-bottom-part__copyright'>@ 2025 Weeb, Inc. All rights reserved.</p>
                 <ul className="footer-bottom-part__social-links-block">

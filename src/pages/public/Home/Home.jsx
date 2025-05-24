@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import DesktopImage from '../../../assets/images/Desktop-large.png';
 import MediumImage from '../../../assets/images/Desktop-medium.png';
 import ShapesImage from '../../../assets/images/Shapes.png';
@@ -9,19 +10,37 @@ import ArtVenueIcon from '../../../assets/icons/artVenue.svg';
 import RightArrowIcon from '../../../assets/icons/arrowRight.svg';
 import "./Home.style.scss";
 
+/**
+ * Home Component
+ * 
+ * The main landing page of the website. Introduces the blog’s mission,
+ * highlights trusted partners, and provides quick access to educational resources
+ * and the latest web trends.
+ * 
+ * Sections:
+ * - Discover: Hero section introducing the purpose of the blog
+ * - Partnership: Logos of companies that trust the platform
+ * - Resources: Highlights tutorials and learning materials
+ * - Information: Encourages staying up to date with weekly articles
+ * 
+ * @returns {JSX.Element} Rendered homepage content
+ */
 const Home = () => {
     return (
         <div className="page home-page">
+
+            {/* Hero Section */}
             <div className="home-page__section-discover">
                 <h1>Explorez le <span>Web</span> sous toutes ses <span>facettes</span></h1>
                 <p>Le monde du web évolue constamment, et nous sommes là pour vous guider à travers ses tendances, technologies et meilleures pratiques. Que vous soyez développeur, designer ou passionné du digital, notre blog vous offre du contenu de qualité pour rester à la pointe.</p>
                 <div className="home-page__section-discover__buttons">
-                    <button className="button button--purple">Découvrir les articles</button>
+                    <button className="button button--purple"><Link to="/articles">Découvrir les articles</Link></button>
                     <button className="button button--transparent">S'abonner à la newsletter</button>
                 </div>  
                 <img src={DesktopImage} alt='desktop-large-img' />          
             </div>
 
+            {/* Partnership Logos */}
             <div className="home-page__section-partnership">
                 <h2>Ils nous font confiance</h2>
                 <ul>
@@ -48,6 +67,7 @@ const Home = () => {
                 </ul>          
             </div>
 
+            {/* Resources Section */}
             <div className="home-page__section-ressources">
                 <div className="home-page__section-ressources__text-block">
                     <p className='home-page__section-ressources__text-block-first-paragraphe'>Des ressources pour tous les niveaux</p>
@@ -63,6 +83,7 @@ const Home = () => {
                 </div>
             </div>
 
+            {/* Information/News Section */}
             <div className="home-page__section-informations">
                 <div className="home-page__section-informations-image">
                     <img src={ShapesImage} alt='desktop-medium-img' />          
