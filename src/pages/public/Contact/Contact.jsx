@@ -10,6 +10,22 @@ import CircularProgress from "@mui/material/CircularProgress";
 import ModalComponent from '../../../components/Modal/Modal';
 import "./Contact.style.scss";
 
+/**
+ * Contact Component
+ * 
+ * A contact form page that collects user feedback (name, firstname, phone number, email, message).
+ * Validates input fields using custom hooks and submits the data to the backend API.
+ * Displays a modal to indicate success or failure of the message submission.
+ * 
+ * Features:
+ * - Reusable input generation using `FieldGeneration`
+ * - Field validation through custom hooks
+ * - Dynamic error message display per field
+ * - API integration with loading state
+ * - Modal feedback for server response
+ * 
+ * @returns {JSX.Element} The rendered contact page with a feedback form
+ */
 const Contact = () => { 
     const [loading, setLoading] = useState(false);
     const [modalOpen, setModalOpen] = useState(false);
@@ -17,18 +33,16 @@ const Contact = () => {
     const [modalMessage, setModalMessage] = useState("");
 
     /******** HOOKS **********/
-    /***** Traitement du champ "name" *****/
     const { name, handleNameChange, errorName, errorNameMsg, resetName } = useNameField();
-    /***** Traitement du champ "firstname" *****/
     const { firstname, handleFirstnameChange, errorFirstname, errorFirstnameMsg, resetFirstname } = useFirstnameField();
-    /***** Traitement du champ "phoneNumber" *****/
     const { phoneNumber, handlePhoneNumberChange, errorPhoneNumber, errorPhoneNumberMsg, resetPhoneNumber } = usePhoneNumberField();
-    /***** Traitement du champ "email" *****/
     const { email, handleEmailChange, errorEmail, errorEmailMsg, resetEmail } = useEmailField();
-    /***** Traitement du champ "message" *****/
     const { message, handleMessageChange, errorMessage, errorMessageMsg, resetMessage } = useMessageField();
 
-    /***** Traitement de la soumission du formulaire *****/
+    /**
+     * Handles form submission to the backend via API.
+     * Shows a modal with the response message on success or a fallback on failure.
+     */
     const handleFormSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -43,8 +57,7 @@ const Contact = () => {
             };
             const response = await postMessageApiCall(formData);
 
-            console.log("Réponse du serveur :", response);
-            if (response.status === 'OK') {
+            if (response.status === 201 && response.statusText === "Created") {
                 resetName();
                 resetFirstname();
                 resetPhoneNumber()
@@ -52,13 +65,12 @@ const Contact = () => {
                 resetMessage();
                 setModalOpen(true);
                 setModalTitle("Succès !");
-                setModalMessage("Votre message a bien été envoyé.");
+                setModalMessage(response.data.message);
             } else {
                 setModalOpen(true);
                 setModalTitle("Échec !");
                 setModalMessage("Votre message n'a pas pu être bien traité.");
             }
-
 
         } catch (err) {
             setModalOpen(true);
@@ -69,6 +81,9 @@ const Contact = () => {
         }
     };
 
+    /**
+     * Validates that all fields are filled and error-free before enabling form submission.
+     */
     const generalCheck = () => (
         name.length > 0 &&
         !errorName &&
@@ -92,6 +107,7 @@ const Contact = () => {
 
             <form className='contact-page__form' onSubmit={handleFormSubmit}>
                 <div className="contact-page__form-top">
+                    {/* Name Field */}
                     <div className="contact-page__form-top-field-block">
                         {FieldGeneration && FieldGeneration(
                             "Nom", 
@@ -106,6 +122,7 @@ const Contact = () => {
                         <p className={`field-error ${errorName ? 'appear' : 'disappear'}`}>{errorNameMsg}</p>
                     </div>
 
+                    {/* Firstname Field */}
                     <div className="contact-page__form-top-field-block">
                         {FieldGeneration && FieldGeneration(
                             "Prénom", 
@@ -120,7 +137,7 @@ const Contact = () => {
                         <p className={`field-error ${errorFirstname ? 'appear' : 'disappear'}`}>{errorFirstnameMsg}</p>
                     </div>
 
-
+                    {/* Phone Number Field */}
                     <div className="contact-page__form-top-field-block">
                         {FieldGeneration && FieldGeneration(
                             "Téléphone", 
@@ -135,6 +152,7 @@ const Contact = () => {
                         <p className={`field-error ${errorPhoneNumber ? 'appear' : 'disappear'}`}>{errorPhoneNumberMsg}</p>
                     </div>
 
+                    {/* Email Field */}
                     <div className="contact-page__form-top-field-block">
                         {FieldGeneration && FieldGeneration(
                             "Email", 
@@ -150,6 +168,7 @@ const Contact = () => {
                     </div>
                 </div>
                 
+                {/* Message Field */}
                 <div className="contact-page__form-msg-field-block">
                     {FieldGeneration && FieldGeneration(
                         "Message", 
@@ -164,12 +183,14 @@ const Contact = () => {
                     <p className={`field-error ${errorMessage ? 'appear' : 'disappear'}`}>{errorMessageMsg}</p>
                 </div>
 
+                {/* Submit Button and Loader */}
                 <div className="contact-page__form-bottom">
                     {loading && <CircularProgress className='contact-page__form-bottom-loader' size={35} thickness={4} />}
                     <button className={`button ${(!generalCheck()) ? 'button--disabled' : 'button--purple'}`} type="submit">Contact</button>
                 </div>
             </form>
 
+            {/* Feedback Modal */}
             <ModalComponent
                 open={modalOpen}
                 onClose={() => setModalOpen(false)}

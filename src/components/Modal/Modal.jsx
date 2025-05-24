@@ -1,6 +1,19 @@
 import { Box, Typography, Modal } from '@mui/material';
 
-// 🔹 Correction : on enlève le useState car `open` est déjà une prop
+/**
+ * ModalComponent
+ * 
+ * A reusable modal dialog built using Material UI's Modal component.
+ * Displays a title and message centered in the viewport.
+ * 
+ * @param {Object} props - Component props
+ * @param {boolean} props.open - Controls whether the modal is visible
+ * @param {function} props.onClose - Function to call when the modal is closed
+ * @param {string} props.title - Title text displayed at the top of the modal
+ * @param {string} props.message - Message content displayed in the modal body
+ * 
+ * @returns {JSX.Element} A styled modal dialog
+ */
 const ModalComponent = ({ open, onClose, title, message }) => {
     return (
         <Modal

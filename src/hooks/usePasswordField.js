@@ -1,6 +1,24 @@
 import { useState } from "react";
 import { isValidPassword } from "../utils/string.utils";
 
+/**
+ * usePasswordField
+ * 
+ * Custom React hook for managing and validating a password input field.
+ * Encapsulates logic for state management, format checks, and error handling.
+ * 
+ * Validation Rules:
+ * - Password is required
+ * - Maximum length: 99 characters
+ * - Must match a valid password format (controlled by isValidPassword)
+ * 
+ * @returns {Object} An object containing:
+ *  - password {string} : The current password value
+ *  - handlePasswordChange {function} : Change handler that validates the input
+ *  - errorPassword {boolean} : Indicates whether the current password has an error
+ *  - errorPasswordMsg {string} : Error message for the validation issue
+ *  - resetPassword {function} : Resets the password to an empty string
+ */
 const usePasswordField = () => {
     const [password, setPassword] = useState("");
     const [errorPassword, setErrorPassword] = useState(false);

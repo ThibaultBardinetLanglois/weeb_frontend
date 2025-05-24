@@ -1,6 +1,24 @@
 import { useState } from "react";
 import { isValidEmail } from "../utils/string.utils";
 
+/**
+ * useEmailField
+ * 
+ * Custom React hook for managing email input state and validation.
+ * Provides handlers for change events, validation feedback, and state reset.
+ * 
+ * Validation Rules:
+ * - Email is required
+ * - Must not exceed 99 characters
+ * - Must match a valid email format
+ * 
+ * @returns {Object} An object containing:
+ *  - email {string} : The current email value
+ *  - handleEmailChange {function} : Change handler to update and validate email
+ *  - errorEmail {boolean} : Boolean indicating if the current email has an error
+ *  - errorEmailMsg {string} : A message describing the email validation error
+ *  - resetEmail {function} : Resets the email state to an empty string
+ */
 const useEmailField = () => {
     const [email, setEmail] = useState("");
     const [errorEmail, setErrorEmail] = useState(false);

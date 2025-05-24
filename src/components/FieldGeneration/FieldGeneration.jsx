@@ -5,7 +5,23 @@ import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
-// Composant permettant la génération d'un champ de formulaire basé sur la librairie Materia ui
+/**
+ * FieldGeneration
+ * 
+ * A reusable form input field component built with Material UI's TextField.
+ * Includes optional password visibility toggle logic and various custom styles.
+ * 
+ * @param {string} label - The label displayed above the input field
+ * @param {string} type - The input type (e.g., "text", "password", "email")
+ * @param {string} autoComplete - The autocomplete attribute for the field
+ * @param {string} variant - The Material UI TextField variant (e.g., "standard", "filled", "outlined")
+ * @param {string|number} width - The width of the field (can be in px, %, rem, etc.)
+ * @param {string} value - The current value of the input field
+ * @param {function} changeFunction - Callback function to handle input value change
+ * @param {number} maxLength - Maximum number of characters allowed in the input
+ * 
+ * @returns {JSX.Element} A styled Material UI TextField component
+ */
 const FieldGeneration = (
     label, 
     type, 
@@ -16,9 +32,10 @@ const FieldGeneration = (
     changeFunction, 
     maxLength
 ) => {
-    // 🔹 Ajout d'un état pour gérer l'affichage du mot de passe
+    // State to handle visibility toggle for password fields
     const [showPassword, setShowPassword] = useState(false);
 
+    // Toggles the password visibility state
     const togglePasswordVisibility = () => setShowPassword(!showPassword);
     
     return (
