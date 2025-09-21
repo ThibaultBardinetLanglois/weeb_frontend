@@ -2,12 +2,9 @@
 @import '../../styles/mixins';
 
 .article-bloc {
-    border: 1px solid $primary-purple;
-    margin: 3.2rem;
     padding: 3.2rem;
     width: 100%;
     text-align: center;
-    border-radius: 1.6rem;
 
     @media (max-width: 500px) { margin: 1.6rem; }
 
@@ -19,7 +16,7 @@
     }
 
     .author-text {
-        margin-top: 1.6rem;
+        margin: 1.6rem;
         color: $secondary-purple;
         font-style: italic;
     }

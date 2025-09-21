@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { isValidEmail } from "../utils/string.utils";
+import { isValidEmail } from "../../utils/string.utils";
 
 /**
  * useEmailField

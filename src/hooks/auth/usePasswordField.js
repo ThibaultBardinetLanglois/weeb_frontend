@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { isValidPassword } from "../utils/string.utils";
+import { isValidPassword } from "../../utils/string.utils";
 
 /**
  * usePasswordField

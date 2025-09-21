@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import useNameField from '../../../hooks/useNameField';
-import useFirstnameField from '../../../hooks/useFirstnameField';
-import usePhoneNumberField from '../../../hooks/usePhoneNumberField';
-import useEmailField from '../../../hooks/useEmailField';
-import useMessageField from '../../../hooks/useMessageField';
+import useNameField from '../../../hooks/common/useNameField';
+import useFirstnameField from '../../../hooks/common/useFirstnameField';
+import usePhoneNumberField from '../../../hooks/contact/usePhoneNumberField';
+import useEmailField from '../../../hooks/common/useEmailField';
+import useMessageField from '../../../hooks/contact/useMessageField';
 import FieldGeneration from '../../../components/FieldGeneration/FieldGeneration';
 import { postMessageApiCall } from './api';
 import CircularProgress from "@mui/material/CircularProgress";
@@ -11,7 +11,7 @@ import ModalComponent from '../../../components/Modal/Modal';
 import "./Contact.style.scss";
 
 /**
- * Contact Component
+ * Contact Component Page
  * 
  * A contact form page that collects user feedback (name, firstname, phone number, email, message).
  * Validates input fields using custom hooks and submits the data to the backend API.

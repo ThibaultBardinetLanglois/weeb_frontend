@@ -1,6 +1,5 @@
-import axios from "axios";
+import { bareAxios } from "../../../api/axiosInstance";
 
-const BASE_URL = "http://localhost:8000/api/contact/"; 
 
 /**
  * postMessageApiCall
@@ -13,7 +12,7 @@ const BASE_URL = "http://localhost:8000/api/contact/";
  */
 export const postMessageApiCall = async (data) => {
     try {
-        const response = await axios.post(BASE_URL, {
+        const response = await bareAxios.post('contact/', {
             first_name: data.firstname,
             last_name: data.name,
             phone: data.phoneNumber,

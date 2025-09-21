@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { isValidPhoneNumber } from "../utils/string.utils";
+import { isValidPhoneNumber } from "../../utils/string.utils";
 
 
 /**

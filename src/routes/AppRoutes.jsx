@@ -5,7 +5,10 @@ import Home from '../pages/public/Home/Home';
 import Login from '../pages/public/Auth/Login/Login';
 import Register from '../pages/public/Auth/Register/Register';
 import Contact from '../pages/public/Contact/Contact';
-import ArticlePage from '../pages/public/Article/Article';
+import ArticlesList from '../pages/public/Article/ArticlesList';
+import ArticleDetails from "../pages/public/Article/ArticleDetails";
+import ArticlePublication from "../pages/public/Article/ArticlePublication";
+import ProtectedRoute from '../ProtectedRoutes';
 
 /**
  * AppRoutes
@@ -17,6 +20,8 @@ import ArticlePage from '../pages/public/Article/Article';
  * Routes:
  * - `/` → Home page
  * - `/articles` → Article listing
+ * - `/articles/:id` → Article details page
+ * - `/articles/:publication` → Article publication form
  * - `/contact` → Contact form page
  * - `/login` → User login form
  * - `/register` → User registration form
@@ -29,11 +34,18 @@ const AppRoutes = () => {
             <ScrollToTop />
             <Routes>
                 <Route element={<MainLayout />}>
+                    {/* Public routes */}
                     <Route path="/" element={<Home />} />
-                    <Route path="/articles" element={<ArticlePage />} />
+                    <Route path="/articles" element={<ArticlesList />} />
+                    <Route path="/articles/:id" element={<ArticleDetails />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
+
+                    {/* Private routes */}
+                    <Route element={<ProtectedRoute />}>
+                        <Route path="/articles/publication" element={<ArticlePublication />} />
+                    </Route>
                 </Route>
             </Routes>
         </Router>

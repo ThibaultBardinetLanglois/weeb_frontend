@@ -13,11 +13,12 @@ import "./Article.style.scss";
  * 
  * @returns {JSX.Element} A JSX element representing the article block
  */
-const Article = ({ author, title, content  }) => (
+const Article = ({ author, title, content, publicationDate  }) => (
     <div className="article-bloc">
         <h3>{title}</h3>
         <p>{content}</p>
         <p className="author-text">{author ? author : "Anonyme"}</p>
+        <p>{publicationDate}</p>
     </div>
 );
 

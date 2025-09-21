@@ -1,4 +1,5 @@
 import AppRoutes from "./routes/AppRoutes.jsx";
+import { AuthProvider } from "./context/AuthContext.js";
 import './styles/index.scss';
 
 /**
@@ -11,9 +12,11 @@ import './styles/index.scss';
  */
 const App = () => {
 	return (
-		<div className="App">
-			<AppRoutes />
-		</div>
+		<AuthProvider>
+			<div className="App">
+				<AppRoutes />
+			</div>
+		</AuthProvider>
 	)
 }
 
