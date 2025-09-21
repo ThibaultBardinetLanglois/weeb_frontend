@@ -4,43 +4,52 @@ import axiosInstance, { bareAxios, setOnRefreshFailed } from "../api/axiosInstan
 
 export const AuthContext = createContext();
 
+/**
+ * AuthProvider
+ *
+ * Provides authentication state and actions (login/logout) to the app.
+ * Stores the access token, decoded user payload, and a boolean connection flag.
+ */
 export const AuthProvider = ({ children }) => {
+    // === AuthContext State ===
+    const [authContextReady, setAuthContextReady] = useState(false);
+    // Signals when the initial context bootstrapping (silent refresh attempt) is complete.
+    // Prevents premature redirects before we know if the user is connected or not.
+
     const [accessToken, setAccessToken] = useState(null);
     const [user, setUser] = useState(null); // Contiendra le payload du token
     const [isConnected, setIsConnected] = useState(false);
 
+    /**
+   * Register a callback executed when the refresh token flow fails.
+   * The axios layer will call this when /auth/token/refresh/ returns 401/invalid,
+   * so we can centrally logout and redirect without circular imports.
+   */
     useEffect(() => {
-        /* 
-            On branche le crochet setOnRefreshFailed au montage : si l'appel au refresh token échoue → logout + /login
-            Quand le AuthProvider se monte, il appelle setOnAuthFailed et donne à api.js une fonction concrète :
-            Si le refresh échoue, alors appelle logout() et redirige vers /login.
-            Du coup, la variable onAuthFailed dans api.js n’est plus null, elle contient maintenant la callback passée depuis le provider.
-            On évite d'importer la fonction logout du AuthContext dans le fichier axiosInstance pour ne pas créer d'imports circulaires
-        */
         setOnRefreshFailed(async () => {
             await logout();
             window.location.assign("/login");
         });
     }, []);
 
-    /* 
-        Chargement de page: On tente un refresh de l'access token et du refresh token via cookie HttpOnly(ci-précédement connecté) 
-        sinon l'état précédent du context est effacé, le hook isConnected est mis à false et l'utilisateur redirigé vers la page de loggin
-        sans avoir effectué de logout et bien reset l'état du context de l'application
-    */
-    useEffect(() => {
-        /* 
-            Variable qui sert uniquement de garde-fou dans les effets asynchrones.
-            Si le composant se démonte (nouveau rechargement de page par exemple => cas extrêmement minime mais à prendre en considération) avant que 
-            l'appel asynchrone à l'api ne se résolve, on a une mise à jour d’état sur un composant démonté → React loggue un warning du style : 
-            "Can't perform a React state update on an unmounted component."
-        */
-        let mounted = true;
 
-        // Éviter des erreurs 500 inutiles liées à l'expiration du refresh token si tu sais qu’il n’y a pas d’accessToken.
+    /**
+   * App boot: attempt a silent refresh using the HttpOnly refresh cookie.
+   * If successful, hydrate context (token, user) and set Authorization default.
+   * If not, clear any stale access token and remove the Authorization header.
+   *
+   * Note:
+   * - We skip the call if there is clearly no access token in storage to avoid
+   *   unnecessary 401 noise during initial loads for anonymous users.
+   * - We guard against setState on unmounted by using a local "mounted" flag.
+   */
+    useEffect(() => {
+        let mounted = true; // guard to avoid setState on unmounted components
+
+        // Avoid unnecessary server calls if we know there's no access token at all.
         if (!sessionStorage.getItem("accessToken")) return;
 
-        // Astuce syntaxique pour pouvoir utiliser await proprement dans useEffect.
+        // IIFE to use async/await inside useEffect without naming a function
         (async () => {
             try {
                 const response = await bareAxios.post("auth/token/refresh/");
@@ -56,20 +65,24 @@ export const AuthProvider = ({ children }) => {
                     axiosInstance.defaults.headers.common.Authorization = `Bearer ${token}`;
                 }
             } catch (_) {
-                // pas connecté (refresh expiré)
+                // Not authenticated (expired/invalid refresh cookie)
                 sessionStorage.removeItem("accessToken");
                 delete axiosInstance.defaults.headers.common.Authorization;
-            } 
+            } finally {
+                if (mounted) setAuthContextReady(true);  // Signal boot complete
+            }
         })();
-        // IIFE (Immediately Invoked Function Expression)
-        // S'exécute immédiatement en async dans useEffect sans polluer le scope avec un nom de fonction
 
-        // Quand le composant se démonte, la variable passe à false → la mise à jour du contexte ne s’exécute plus.
+        // Cleanup: prevent state updates after unmount
         return () => (mounted = false);
     }, []);
 
 
-    // Login utilisateur
+    /**
+   * Login user.
+   * @param {{ email: string, password: string }} data - credentials payload
+   * @returns {Promise<{ok: boolean, message?: string}>}
+   */
     const login = async (data) => {
         try {
             const response = await axiosInstance.post("auth/login/", data);
@@ -83,7 +96,7 @@ export const AuthProvider = ({ children }) => {
                 setIsConnected(true);
                 sessionStorage.setItem("accessToken", token);
 
-                // Pose l'Authorization pour TOUTES les futures requêtes effectuées avec axiosInstance
+                // Apply Authorization to all subsequent requests using axiosInstance
                 axiosInstance.defaults.headers.common.Authorization = `Bearer ${token}`;
     
                 return { ok: true };
@@ -102,10 +115,14 @@ export const AuthProvider = ({ children }) => {
     };
     
 
-    // 🚪 Déconnexion de l'utilisateur
+    /**
+   * Logout user.
+   * Sends a server-side logout to clear the refresh cookie, then resets local state.
+   */
     const logout = async () => {
         try {
-            await bareAxios.post("auth/logout/", {}); // supprime le cookie contenu dans la config
+            // Use bareAxios so no Authorization header is attached
+            await bareAxios.post("auth/logout/", {}); // deletes the cookie as per server logic
         } catch (e) {
             console.warn("Logout server-side failed:", e);
         } finally {
@@ -113,7 +130,7 @@ export const AuthProvider = ({ children }) => {
             setUser(null);
             setIsConnected(false);
             sessionStorage.removeItem("accessToken");
-            // Retire l'Authorization global
+            // Remove the global Authorization header on the axios instance
             delete axiosInstance.defaults.headers.common.Authorization;
         }
     };
@@ -121,7 +138,7 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider 
-            value={{ accessToken, user, isConnected, login, logout }}
+            value={{ authContextReady, accessToken, user, isConnected, login, logout }}
         >
             {children}
         </AuthContext.Provider>

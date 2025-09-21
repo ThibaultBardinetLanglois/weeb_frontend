@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useTitleField from "../../../hooks/article/useTitleField";
 import useContentField from "../../../hooks/article/useContentField";
 import FieldGeneration from "../../../components/FieldGeneration/FieldGeneration";
-import { createArticle } from "./api";
+import { createArticle } from "../../public/Article/api";
 import CircularProgress from "@mui/material/CircularProgress";
 import ModalComponent from "../../../components/Modal/Modal";
 import "./Article.style.scss";

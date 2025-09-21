@@ -3,25 +3,27 @@ import { useState } from "react";
 /**
  * useContentField
  * 
- * Custom React hook for managing a content input field with validation.
- * Handles state, error detection, and error messages for a textarea or long text input.
+ * Custom React hook for managing a content/textarea input field with validation.
  * 
  * Validation Rules:
- * - Content is required
+ * - Field is required
  * - Maximum length: 999 characters
  * 
  * @returns {Object} An object containing:
- *  - content {string} : The current content input value
- *  - handleContentChange {function} : Handler for updating and validating the content input
- *  - errorContent {boolean} : Indicates whether the current content has a validation error
- *  - errorContentMsg {string} : A content describing the validation error
- *  - resetContent {function} : Clears the content input field
+ *  - content {string} : The current input value
+ *  - handleContentChange {function} : Handler for updating and validating the content
+ *  - errorContent {boolean} : Indicates whether the field has a validation error
+ *  - errorContentMsg {string} : The error message describing the validation issue
+ *  - resetContent {function} : Clears the input field
  */
 const useContentField = () => {
     const [content, setContent] = useState("");
     const [errorContent, setErrorContent] = useState(false);
     const [errorContentMsg, setErrorContentMsg] = useState("");
 
+    /**
+   * Handles input changes and validates content.
+   */
     const handleContentChange = (e) => {
         const inputValue = e.target.value;
 
@@ -34,6 +36,9 @@ const useContentField = () => {
         }        
     };
 
+    /**
+   * Sets appropriate error states and messages based on validation rules.
+   */
     const handleContentError = (content) => {
         if (content.length === 0) {
             setContent(content);
@@ -45,6 +50,7 @@ const useContentField = () => {
         }
     };
 
+    /** Resets the field back to an empty string. */
     const resetContent = () => setContent("");
 
     return { content, handleContentChange, errorContent, errorContentMsg, resetContent };

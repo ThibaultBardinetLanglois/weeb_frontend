@@ -24,6 +24,9 @@ const useEmailField = () => {
     const [errorEmail, setErrorEmail] = useState(false);
     const [errorEmailMsg, setErrorEmailMsg] = useState("");
 
+    /**
+   * Handles input change and runs validation.
+   */
     const handleEmailChange = (event) => {
         const inputValue = event.target.value;
         
@@ -40,6 +43,9 @@ const useEmailField = () => {
         }
     };
 
+    /**
+   * Sets error state and messages based on validation rules.
+   */
     const handleEmailError = (email) => {
         if (email.length === 0) {
             setEmail(email);
@@ -55,6 +61,7 @@ const useEmailField = () => {
         }
     }
 
+    /** Resets the field back to an empty string. */
     const resetEmail = () => setEmail("");
 
     return { email, handleEmailChange, errorEmail, errorEmailMsg, resetEmail };

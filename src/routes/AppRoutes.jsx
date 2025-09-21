@@ -7,7 +7,7 @@ import Register from '../pages/public/Auth/Register/Register';
 import Contact from '../pages/public/Contact/Contact';
 import ArticlesList from '../pages/public/Article/ArticlesList';
 import ArticleDetails from "../pages/public/Article/ArticleDetails";
-import ArticlePublication from "../pages/public/Article/ArticlePublication";
+import ArticlePublication from "../pages/private/Article/ArticlePublication";
 import ProtectedRoute from '../ProtectedRoutes';
 
 /**

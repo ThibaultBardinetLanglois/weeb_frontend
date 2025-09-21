@@ -37,9 +37,9 @@ const Header = () => {
 
     const handleLogout = async () => {
         try {
-            await logout(); // nettoie le contexte + session
+            await logout(); // cleans the context + session
             closeBurgerMenu();
-            navigate("/", { replace: true }); // remplacer l’entrée courante de l’historique au lieu d’en ajouter une nouvelle.
+            navigate("/", { replace: true }); // replace the current history entry instead of adding a new one.
         } catch (e) {
             console.error(e);
         }
@@ -56,7 +56,7 @@ const Header = () => {
                         <li><Link to="/">Weeb</Link></li>
                         <li><Link to="/" onClick={closeBurgerMenu}>About Us</Link></li>
                         <li><Link to="/contact" onClick={closeBurgerMenu}>Contact</Link></li>
-                        {/* Publication visible uniquement si connecté */}
+                        {/* Publication visible only if logged in */}
                         {isConnected && (
                             <li>
                                 <Link 

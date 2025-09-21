@@ -31,14 +31,16 @@ const Login = () => {
     const [modalOpen, setModalOpen] = useState(false);
     const [modalTitle, setModalTitle] = useState("");
     const [modalMessage, setModalMessage] = useState("");
-
     /******** HOOKS **********/
     // Email field management
     const { email, handleEmailChange, errorEmail, errorEmailMsg, resetEmail } = useEmailField();
     // Password field management
     const { password, handlePasswordChange, errorPassword, errorPasswordMsg, resetPassword } = usePasswordField();
     
-    // Handles form submission and API interaction
+    /**
+     * Handles form submission and login via AuthContext.
+     * Displays success/error feedback in a modal.
+     */
     const handleFormSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -62,7 +64,9 @@ const Login = () => {
         setLoading(false);
     };
 
-    // Returns true if form is valid and ready to submit
+    /**
+     * Checks if the form is valid and ready to submit.
+     */
     const generalCheck = () => (
         email.length > 0 &&
         !errorEmail &&

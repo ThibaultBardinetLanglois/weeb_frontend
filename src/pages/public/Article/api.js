@@ -23,16 +23,16 @@ export const getAllArticles = async () => {
 /**
  * getArticleById
  *
- * Récupère un article unique depuis l’API en fonction de son identifiant.
+ * Fetches a single article from the API by its unique identifier.
  *
- * @param {number|string} id - L'identifiant unique de l’article (ex: 42)
+ * @param {number|string} id - The unique article ID (e.g., 42)
  *
  * @returns {Promise<Object|undefined>} 
- *   - Les données de l’article si la requête réussit
- *   - `undefined` si une erreur survient (elle est loguée en console)
+ *   - The article data if the request succeeds
+ *   - `undefined` if an error occurs (it will be logged in the console)
  *
- * @throws Ne lève pas explicitement d’erreur : en cas de problème,
- *         la fonction capture l’exception et logge dans la console.
+ * @throws Does not explicitly throw: in case of failure,
+ *         the error is caught and logged in the console.
  */
 export const getArticleById = async (id) => {
     try {

@@ -4,10 +4,11 @@ import './styles/index.scss';
 
 /**
  * App
- * 
+ *
  * Root component of the application. 
- * Initializes global styles and sets up route rendering via AppRoutes.
- * 
+ * Wraps the app with the AuthProvider to manage authentication state globally,
+ * initializes global styles, and renders route-based components via AppRoutes.
+ *
  * @returns {JSX.Element} The root application container
  */
 const App = () => {

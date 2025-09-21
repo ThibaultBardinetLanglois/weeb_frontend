@@ -51,10 +51,10 @@ const Register = () => {
         setLoading(true);
 
         try {
-            const formData = { lastname: name, firstname, email, password }; // 🔹 attention : "lastname" côté API
+            const formData = { lastname: name, firstname, email, password }; // "lastname" key expected by API
             const response = await registerApiCall(formData);
 
-            // Si l’API renvoie un message de succès
+            // If the API returns a success message
             if (response.status === 201 && response.statusText === "Created") {
                 resetName();
                 resetFirstname();
@@ -69,13 +69,13 @@ const Register = () => {
                 setModalMessage("Une erreur est survenue lors de votre inscription.");
             }
         } catch (err) {
-            // En cas d’échec réseau ou API
+            // Network or API error
             console.error("Erreur API :", err);
 
             let errorMsg = "Suite à un échec serveur, votre inscription n'a pas pu être traitée. Veuillez réessayer plus tard";
 
             if (err.status === 400 && err.data.non_field_errors) {
-                errorMsg = err.data.non_field_errors[0]; // En cas de code 400 on affiche le premier message
+                errorMsg = err.data.non_field_errors[0]; // Display the first message if validation fails
             }
 
             setModalOpen(true);

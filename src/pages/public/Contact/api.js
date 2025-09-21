@@ -21,7 +21,7 @@ export const postMessageApiCall = async (data) => {
         });
         return response;
     } catch (error) {
-        console.log("Erreur lors de l'envoi des données :", error);
+        console.error("Erreur lors de l'envoi des données :", error);
         throw error; 
     }
 };

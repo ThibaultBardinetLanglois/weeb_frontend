@@ -23,6 +23,9 @@ const useTitleField = () => {
     const [errorTitle, setErrorTitle] = useState(false);
     const [errorTitleMsg, setErrorTitleMsg] = useState("");
 
+    /**
+   * Handles input changes and validates the title.
+   */
     const handleTitleChange = (e) => {
         const inputValue = e.target.value;
 
@@ -35,6 +38,9 @@ const useTitleField = () => {
         }
     };
 
+    /**
+   * Sets appropriate error states and messages based on validation rules.
+   */
     const handleTitleError = (title) => {
         if (title.length === 0) {
             setTitle(title);
@@ -46,6 +52,7 @@ const useTitleField = () => {
         }
     };
 
+    /** Resets the field back to an empty string. */
     const resetTitle = () => setTitle("");
 
     return { title, handleTitleChange, errorTitle, errorTitleMsg, resetTitle };
