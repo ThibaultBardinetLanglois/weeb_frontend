@@ -22,6 +22,9 @@ const useNameField = () => {
     const [errorName, setErrorName] = useState(false);
     const [errorNameMsg, setErrorNameMsg] = useState("");
 
+    /**
+   * Handles input change and validates the name.
+   */
     const handleNameChange = (e) => {
         const inputValue = e.target.value;
 
@@ -34,6 +37,9 @@ const useNameField = () => {
         }
     };
 
+    /**
+   * Sets appropriate error states and messages based on validation rules.
+   */
     const handleNameError = (name) => {
         if (name.length === 0) {
             setName(name);
@@ -45,6 +51,7 @@ const useNameField = () => {
         }
     };
 
+    /** Resets the field back to an empty string. */
     const resetName = () => setName("");
 
     return { name, handleNameChange, errorName, errorNameMsg, resetName };

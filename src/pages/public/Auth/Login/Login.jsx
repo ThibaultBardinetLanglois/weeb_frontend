@@ -1,9 +1,10 @@
-import { useState } from 'react';
-import useEmailField from '../../../../hooks/useEmailField';
-import usePasswordField from '../../../../hooks/usePasswordField';
+import { useState, useContext } from 'react';
+import { useNavigate } from "react-router-dom";
+import useEmailField from '../../../../hooks/common/useEmailField';
+import usePasswordField from '../../../../hooks/auth/usePasswordField';
 import { Link } from 'react-router-dom';
 import FieldGeneration  from '../../../../components/FieldGeneration/FieldGeneration';
-import { loginApiCall } from '../api';
+import { AuthContext } from '../../../../context/AuthContext';
 import CircularProgress from "@mui/material/CircularProgress";
 import ModalComponent from '../../../../components/Modal/Modal';
 import "./Auth-login.style.scss";
@@ -24,48 +25,48 @@ import "./Auth-login.style.scss";
  * @returns {JSX.Element} The rendered login form and associated UI
  */
 const Login = () => {
+    const navigate = useNavigate();
+    const { login } = useContext(AuthContext);
     const [loading, setLoading] = useState(false);
     const [modalOpen, setModalOpen] = useState(false);
     const [modalTitle, setModalTitle] = useState("");
     const [modalMessage, setModalMessage] = useState("");
-
     /******** HOOKS **********/
     // Email field management
     const { email, handleEmailChange, errorEmail, errorEmailMsg, resetEmail } = useEmailField();
     // Password field management
     const { password, handlePasswordChange, errorPassword, errorPasswordMsg, resetPassword } = usePasswordField();
     
-    // Handles form submission and API interaction
+    /**
+     * Handles form submission and login via AuthContext.
+     * Displays success/error feedback in a modal.
+     */
     const handleFormSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
 
-        try {
-            const formData = { email, password };
-            const response = await loginApiCall(formData);
+        const formData = { email, password };
+        const result = await login(formData);
 
-            console.log("Réponse du serveur :", response);
-            if (response.status === 'OK') {
-                resetEmail();
-                resetPassword();
-                setModalOpen(true);
-                setModalTitle("Succès !");
-                setModalMessage("Vous êtes dorénavant connecté.");
-            } else {
-                setModalOpen(true);
-                setModalTitle("Échec !");
-                setModalMessage("Votre connexion n'a pas pu être bien traité.");
-            }
-        } catch (err) {
+        if (result.ok) {
+            resetEmail();
+            resetPassword();
+            setModalOpen(true);
+            setModalTitle("Succès !");
+            setModalMessage("Vous êtes dorénavant connecté.");
+            setTimeout(() => navigate("/"), 800);
+        } else {
             setModalOpen(true);
             setModalTitle("Échec !");
-            setModalMessage("Suite à un échec serveur votre connexion n'a pas pu être bien traité. Veuillez réessayez plus tard");
-        } finally {
-            setLoading(false);
+            setModalMessage(result.message);
         }
+
+        setLoading(false);
     };
 
-    // Returns true if form is valid and ready to submit
+    /**
+     * Checks if the form is valid and ready to submit.
+     */
     const generalCheck = () => (
         email.length > 0 &&
         !errorEmail &&

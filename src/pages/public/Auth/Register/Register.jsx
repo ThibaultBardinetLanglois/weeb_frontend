@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import useNameField from '../../../../hooks/useNameField';
-import useFirstnameField from '../../../../hooks/useFirstnameField';
-import useEmailField from '../../../../hooks/useEmailField';
-import usePasswordField from '../../../../hooks/usePasswordField';
+import useNameField from '../../../../hooks/common/useNameField';
+import useFirstnameField from '../../../../hooks/common/useFirstnameField';
+import useEmailField from '../../../../hooks/common/useEmailField';
+import usePasswordField from '../../../../hooks/auth/usePasswordField';
 import { Link } from 'react-router-dom';
 import FieldGeneration  from '../../../../components/FieldGeneration/FieldGeneration';
 import { registerApiCall } from '../api';
@@ -51,27 +51,36 @@ const Register = () => {
         setLoading(true);
 
         try {
-            const formData = { name, firstname, email, password };
+            const formData = { lastname: name, firstname, email, password }; // "lastname" key expected by API
             const response = await registerApiCall(formData);
 
-            console.log("Réponse du serveur :", response);
-            if (response.status === 'OK') {
+            // If the API returns a success message
+            if (response.status === 201 && response.statusText === "Created") {
                 resetName();
                 resetFirstname();
                 resetEmail();
                 resetPassword();
                 setModalOpen(true);
                 setModalTitle("Succès !");
-                setModalMessage("Vous êtes dorénavant enregistré.");
+                setModalMessage("Vous êtes dorénavant enregistré. Vous pourrez vous connecter lorsqu'un administrateur aura validé votre demande");
             } else {
                 setModalOpen(true);
                 setModalTitle("Échec !");
-                setModalMessage("Votre inscription n'a pas pu être bien traité.");
+                setModalMessage("Une erreur est survenue lors de votre inscription.");
             }
         } catch (err) {
+            // Network or API error
+            console.error("Erreur API :", err);
+
+            let errorMsg = "Suite à un échec serveur, votre inscription n'a pas pu être traitée. Veuillez réessayer plus tard";
+
+            if (err.status === 400 && err.data.non_field_errors) {
+                errorMsg = err.data.non_field_errors[0]; // Display the first message if validation fails
+            }
+
             setModalOpen(true);
             setModalTitle("Échec !");
-            setModalMessage("Suite à un échec serveur votre inscription n'a pas pu être bien traité. Veuillez réessayez plus tard");
+            setModalMessage(errorMsg);
         } finally {
             setLoading(false);
         }

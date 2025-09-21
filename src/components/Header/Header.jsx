@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext';
 import './Header.style.scss';
 
 /**
@@ -16,6 +17,8 @@ import './Header.style.scss';
  * @returns {JSX.Element} A header section with branding, navigation, and burger menu
  */
 const Header = () => {
+    const { isConnected, logout } = useContext(AuthContext);
+    const navigate = useNavigate();
     // State to track whether the burger menu is open or closed
     const [burgerIsOpen, setBurgerIsOpen] = useState(false);
 
@@ -32,6 +35,16 @@ const Header = () => {
         }
     };
 
+    const handleLogout = async () => {
+        try {
+            await logout(); // cleans the context + session
+            closeBurgerMenu();
+            navigate("/", { replace: true }); // replace the current history entry instead of adding a new one.
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
     return (
         <div className="header-container">
             <Link to="/" className='header-container__home-link'>Weeb</Link>
@@ -43,21 +56,46 @@ const Header = () => {
                         <li><Link to="/">Weeb</Link></li>
                         <li><Link to="/" onClick={closeBurgerMenu}>About Us</Link></li>
                         <li><Link to="/contact" onClick={closeBurgerMenu}>Contact</Link></li>
+                        {/* Publication visible only if logged in */}
+                        {isConnected && (
+                            <li>
+                                <Link 
+                                className="button button--transparent button--border-transition"
+                                to="/articles/publication" onClick={closeBurgerMenu}>Publication
+                                </Link>
+                            </li>
+                        )}
                     </ul>
                 </nav>
 
                 {/* Auth buttons */}
                 <div className="header-container__navbar_buttons">
-                    <Link 
-                        to="/login" 
-                        className='button button--transparent button--border-transition'
-                        onClick={closeBurgerMenu}
-                    >Log In</Link>
-                    <Link 
-                        to="/register" 
-                        className='button button--purple'
-                        onClick={closeBurgerMenu}
-                    >Join Now</Link>
+                    {!isConnected ? (
+                        <>
+                            <Link
+                                to="/login"
+                                className="button button--transparent button--border-transition"
+                                onClick={closeBurgerMenu}
+                            >
+                                Log In
+                            </Link>
+                            <Link
+                                to="/register"
+                                className="button button--purple"
+                                onClick={closeBurgerMenu}
+                            >
+                                Join Now
+                            </Link>
+                        </>
+                    ) : (
+                        <button
+                            className="button button--transparent button--border-transition"
+                            onClick={handleLogout}
+                            type="button"
+                            >
+                                Logout
+                        </button>
+                    )}
                 </div>
             </header>
 

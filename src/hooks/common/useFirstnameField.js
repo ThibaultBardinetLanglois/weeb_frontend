@@ -23,6 +23,9 @@ const useFirstnameField = () => {
     const [errorFirstname, setErrorFirstname] = useState(false);
     const [errorFirstnameMsg, setErrorFirstnameMsg] = useState("");
 
+    /**
+   * Handles input changes and validates the first name.
+   */
     const handleFirstnameChange = (e) => {
         const inputValue = e.target.value;
 
@@ -35,6 +38,9 @@ const useFirstnameField = () => {
         }
     };
 
+    /**
+   * Sets appropriate error states and messages based on validation rules.
+   */
     const handleFirstnameError = (firstname) => {
         if (firstname.length === 0) {
             setFirstname(firstname);
@@ -46,6 +52,7 @@ const useFirstnameField = () => {
         }
     };
 
+    /** Resets the field back to an empty string. */
     const resetFirstname = () => setFirstname("");
 
     return { firstname, handleFirstnameChange, errorFirstname, errorFirstnameMsg, resetFirstname };

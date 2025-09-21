@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from "react-router-dom";
 import { getAllArticles } from './api';
 import Article from '../../../components/Article/Article';
 import CircularProgress from "@mui/material/CircularProgress";
@@ -20,20 +21,25 @@ import "./Article.style.scss";
  * 
  * @returns {JSX.Element} The rendered article list page
  */
-const ArticlePage = () => {
-    const [articles, setArticles] = useState([]);
-    const [loading, setLoading] = useState(true);
+const ArticlesListPage = () => {
+    const [articles, setArticles] = useState();
+    const [loading, setLoading] = useState(false);
     const [modalOpen, setModalOpen] = useState(false);
     const [modalTitle, setModalTitle] = useState("");
     const [modalMessage, setModalMessage] = useState("");
-    const [listArticlesIsLoaded, setListArticlesIsLoaded] = useState(false);
 
     // Fetch article data from the API
     const fetchData = async () => {
         try {
+            setLoading(true);
             const data = await getAllArticles();
-            setArticles(data.results);
-            setListArticlesIsLoaded(true);
+            setArticles(data);
+
+            if(!data) {
+                setModalOpen(true);
+                setModalTitle("Aïe");
+                setModalMessage("Une erreur est survenue lors du chargement des articles.");
+            }
         } catch (err) {
             setModalOpen(true);
             setModalTitle("Aïe");
@@ -58,14 +64,17 @@ const ArticlePage = () => {
 
         <div className="articles-list">
             {/* Render articles only after loading and successful API response */}
-            {listArticlesIsLoaded && !loading && articles && articles?.length > 0 &&
+            {!loading && articles && articles?.length > 0 &&
                 articles.map(article => (
-                    <Article
-                        key={article.id}
-                        title={article.title}
-                        content={article.content}
-                        author={article?.author}
-                    />
+                    <Link key={article.id} to={`/articles/${article.id}`} className="article-link">
+                        <Article
+                            key={article.id}
+                            title={article.title}
+                            content={article.content}
+                            author={article?.author}
+                            publicationDate={article.publication_date_str}
+                        />
+                    </Link>
                 ))
             }
         </div>
@@ -74,7 +83,7 @@ const ArticlePage = () => {
             Show empty message only when the fetch has completed and no articles were returned.
             Avoids prematurely showing the message during the initial loading state.
         */}
-        {listArticlesIsLoaded && articles.length === 0 && <p className='list-empty-info'>Aucun article trouvé.</p>}
+        {articles && articles?.length === 0 && <p className='list-empty-info'>Aucun article trouvé.</p>}
 
         {/* Modal for displaying error message if API call fails */}
         <ModalComponent
@@ -87,4 +96,4 @@ const ArticlePage = () => {
     );
 };
 
-export default ArticlePage;
+export default ArticlesListPage;

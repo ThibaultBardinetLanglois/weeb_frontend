@@ -69,22 +69,3 @@
         }
     }
 }
-
-.article-detail-page {
-    @include flex-columns-center-horizontally-and-vertically;
-    padding: 8rem;
-
-    h2 {
-        margin-bottom: 2.4rem;
-        border-bottom: 0.1rem solid $secondary-purple;
-    }
-
-    p { margin: 2.4rem; }
-    .content-text { font-size: 2.8rem; }
-
-    .author-text {
-        font-size: 2.4rem;
-        color: $secondary-purple;
-        font-style: italic;
-    }
-}

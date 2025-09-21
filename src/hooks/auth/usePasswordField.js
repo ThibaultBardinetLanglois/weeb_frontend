@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { isValidPassword } from "../utils/string.utils";
+import { isValidPassword } from "../../utils/string.utils";
 
 /**
  * usePasswordField
@@ -24,6 +24,9 @@ const usePasswordField = () => {
     const [errorPassword, setErrorPassword] = useState(false);
     const [errorPasswordMsg, setErrorPasswordMsg] = useState("");
 
+    /**
+   * Handles input changes and runs validation.
+   */
     const handlePasswordChange = (event) => {
         const inputValue = event.target.value;
         
@@ -40,6 +43,9 @@ const usePasswordField = () => {
         }
     };
 
+    /**
+   * Sets appropriate error messages depending on validation rules.
+   */
     const handlePasswordError = (password) => {
         if (password.length === 0) {
             setPassword(password);
@@ -55,6 +61,7 @@ const usePasswordField = () => {
         }
     }
 
+    /** Resets the password back to an empty string. */
     const resetPassword = () => setPassword("");
 
     return { password, handlePasswordChange, errorPassword, errorPasswordMsg, resetPassword };
