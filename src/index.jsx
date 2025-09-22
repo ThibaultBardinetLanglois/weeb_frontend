@@ -1,14 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
+import App from './App.jsx';
 import reportWebVitals from './reportWebVitals';
 
+/**
+ * Web vitals reporting is included and can be customized for performance tracking.
+ */
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+    // <React.StrictMode>
+    //     <App />
+    // </React.StrictMode>
     <App />
-  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

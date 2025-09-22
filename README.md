@@ -1,70 +1,80 @@
-# Getting Started with Create React App
+. Ce projet utilise React 18 pour la construction de l'interface utilisateur, avec des composants Material UI pour une UI cohérente et ergonomique.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+---
 
-## Available Scripts
+## 🚀 Installation et Lancement
 
-In the project directory, you can run:
+1️⃣ Cloner le projet
+git clone git@github.com:ThibaultBardinetLanglois/weeb_frontend.git
+cd weeb_frontend
+git checkout feature/sprint_3_integration_maquettes
 
-### `npm start`
+2️⃣ Installer les dépendances
+npm install
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+3️⃣ Démarrer l'application en mode développement
+npm start
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## 🛠️ Technologies utilisées :
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+🟢 React 18 (react, react-dom)
+React est utilisé comme bibliothèque principale pour la construction de l'interface utilisateur.
 
-### `npm run build`
+🎨 Material UI (@mui/material, @mui/icons-material)
+Material UI est utilisé pour un design moderne et réactif. Dans le projet cette librairie permet de générer des champs de formulaires, des loaders, etc.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+🔄 React Router DOM (react-router-dom)
+Gère la navigation entre les différentes pages de l'application.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+🔌 Axios (axios)
+Utilisé pour les requêtes HTTP vers l'API backend, permettant une gestion simple des appels réseau.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+📏ESLint & Testing Library (@testing-library/react, @testing-library/jest-dom, @testing-library/user-event)
 
-### `npm run eject`
+- ESLint garantit un code propre et maintenable.
+- La Testing Library permet de tester l'application avec une approche orientée utilisateur.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+🎨 Sass (sass, sass-loader)
+Utilisé pour des styles plus modulaires et une gestion plus avancée des styles CSS.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+📊 Web Vitals (web-vitals)
+Permet de mesurer et d'améliorer les performances de l'application.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 📄 Structure du projet
 
-## Learn More
+weeb_frontend/
+├── public/ # Fichiers statiques
+├── src/ # Code source principal
+│ ├── assets/ # Contient les images et icônes
+│ ├── components/ # Composants réutilisables
+│ ├── hooks/ # Hooks personnalisés
+│ ├── layout/ # Composants pour la mise en page
+│ ├── pages/ # Pages principales
+│ ├── routes/ # fichiers dédiés au routage de l'application
+│ ├── styles/ # Fichiers SCSS avec les règles globales de style
+│ ├── utils/ # Fonctions utilitaires
+│ ├── App.jsx # Point d'entrée principal
+│ ├── index.jsx # Bootstrapping de l'application
+├── package.json # Configuration des dépendances
+├── .gitignore # Fichiers à exclure du repository
+└── README.md # Documentation
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 👥 Contribuer au projet
 
-### Code Splitting
+1. Forker le repository
+2. Créer une branche (git checkout -b feature/ma-nouvelle-fonction)
+3. Committer vos changements (git commit -m 'Ajout d'une nouvelle fonctionnalité')
+4. Pousser la branche (git push origin feature/ma-nouvelle-fonction)
+5. Ouvrir une Pull Request
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+## 📞 Contact
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Si vous avez des questions, n'hésitez pas à me contacter via GitHub ! 🚀

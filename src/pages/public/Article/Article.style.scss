@@ -1,0 +1,90 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+
+.article-page {
+    padding: 4.8rem;
+    @include flex-columns-center-horizontally;
+
+    @media (max-width: 600px) { padding: 3.2rem; }
+
+    h2 {
+        span {
+            font-weight: normal;
+            color: $secondary-purple;
+        }
+    }
+
+    .loader {
+        color: $secondary-purple;
+        margin-top: 1.6rem;
+    }
+
+    .articles-list {
+        width: 55%;
+        margin: 0 auto;
+        padding: 3.2rem;
+        @include flex-columns-center-horizontally;
+
+        .article-link {
+            display: block;
+            width: 50%;
+            margin: 3.2rem 0;
+            border: 1px solid $primary-purple;
+            border-radius: 1.6rem;
+
+            @media (max-width: 1300px) { width: 65%;}
+            @media (max-width: 900px) { width: 75%; }
+            @media (max-width: 700px) { width: 85%; }
+            @media (max-width: 410px) { width: 95%; }
+        }
+
+        @media (max-width: 1800px) { width: 65%;}
+        @media (max-width: 1500px) { width: 75%; }
+        @media (max-width: 1200px) { width: 85%; }
+        @media (max-width: 1000px) { width: 90%; }
+        @media (max-width: 750px) { width: 95%; }
+        @media (max-width: 600px) { width: 100%; padding: 3.2rem 0; }
+    }
+
+    /* Formulaire de création */
+    &__form {
+        margin-top: 1.6rem;
+        width: 100%;
+        @include flex-columns;
+
+        &-field-block {
+            @include flex-center;
+            margin: 3.2rem 0;
+            width: 50%;
+        }
+
+        &-bottom {
+            margin: 1.6rem;
+            position: relative;
+            &-loader {
+                color: $secondary-purple;
+                position: absolute;
+                left: -50%;
+            }
+        }
+    }
+}
+
+.article-detail-page {
+    @include flex-columns-center-horizontally-and-vertically;
+    padding: 8rem;
+
+    h2 {
+        margin-bottom: 2.4rem;
+        border-bottom: 0.1rem solid $secondary-purple;
+    }
+
+    p { margin: 2.4rem; }
+    .content-text { font-size: 2.8rem; }
+
+    .author-text {
+        font-size: 2.4rem;
+        color: $secondary-purple;
+        font-style: italic;
+    }
+}
