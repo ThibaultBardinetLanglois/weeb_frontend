@@ -57,7 +57,7 @@ const Contact = () => {
             };
             const response = await postMessageApiCall(formData);
 
-            if (response.status === 201 && response.statusText === "Created") {
+            if (response.status === 201) {
                 resetName();
                 resetFirstname();
                 resetPhoneNumber()
