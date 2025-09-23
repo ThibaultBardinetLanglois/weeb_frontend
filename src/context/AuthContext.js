@@ -44,10 +44,13 @@ export const AuthProvider = ({ children }) => {
    * - We guard against setState on unmounted by using a local "mounted" flag.
    */
     useEffect(() => {
-        let mounted = true; // guard to avoid setState on unmounted components
-
         // Avoid unnecessary server calls if we know there's no access token at all.
-        if (!sessionStorage.getItem("accessToken")) return;
+        if (!sessionStorage.getItem("accessToken")) {
+            setAuthContextReady(true); // important
+            return;
+        }
+
+        let mounted = true; // guard to avoid setState on unmounted components
 
         // IIFE to use async/await inside useEffect without naming a function
         (async () => {
@@ -63,11 +66,24 @@ export const AuthProvider = ({ children }) => {
                     setIsConnected(true);
                     sessionStorage.setItem("accessToken", token);
                     axiosInstance.defaults.headers.common.Authorization = `Bearer ${token}`;
+                } else {
+                    // No access returned => we consider not connected
+                    setIsConnected(false);
                 }
-            } catch (_) {
-                // Not authenticated (expired/invalid refresh cookie)
-                sessionStorage.removeItem("accessToken");
-                delete axiosInstance.defaults.headers.common.Authorization;
+            } catch (err) {
+                const status = err?.response?.status;
+
+                // If the refresh cookie is absent/invalid/expired → we also invalidate it on the server side
+                if (status === 401 || status === 403) {
+                    try {
+                        await logout(); 
+                    } catch (_) {}
+                } else {
+                    // network/server errors: do not blacklist at all costs; just clean local
+                    sessionStorage.removeItem("accessToken");
+                    delete axiosInstance.defaults.headers.common.Authorization;
+                    if (mounted) setIsConnected(false);
+                }
             } finally {
                 if (mounted) setAuthContextReady(true);  // Signal boot complete
             }
