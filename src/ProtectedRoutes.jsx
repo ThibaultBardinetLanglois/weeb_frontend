@@ -33,9 +33,14 @@ export default function ProtectedRoute() {
   const { authContextReady, isConnected } = useContext(AuthContext);
   const location = useLocation(); // Current location, used for redirection after login
 
+  // As long as the context has not finished initializing, we block (spinner or null)
+  if (!authContextReady) {
+    return null; // ou <Spinner />
+  }
+
   // If the user is not authenticated, redirect them to /login
   // Passes the current location in state so the user can be redirected back after login
-  if (authContextReady && !isConnected) {
+  if (!isConnected) {
     return <Navigate to="/login" replace state={{ from: location }} />;
   }
   
