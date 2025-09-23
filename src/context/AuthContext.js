@@ -103,7 +103,7 @@ export const AuthProvider = ({ children }) => {
         try {
             const response = await axiosInstance.post("auth/login/", data);
 
-            if (response.status === 200 && response.statusText === "OK") {
+            if (response.status === 200) {
                 const token = response.data.access;
                 const decoded = jwtDecode(token);
     
