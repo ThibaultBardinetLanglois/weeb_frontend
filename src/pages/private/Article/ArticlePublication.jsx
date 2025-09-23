@@ -44,7 +44,7 @@ const ArticleCreate = () => {
 
             const response = await createArticle(formData);
 
-             if (response.status === 201 && response.statusText === "Created") {
+             if (response.status === 201) {
                 resetTitle();
                 resetContent();
 
