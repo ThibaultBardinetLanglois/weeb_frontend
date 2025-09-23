@@ -55,7 +55,7 @@ const Register = () => {
             const response = await registerApiCall(formData);
 
             // If the API returns a success message
-            if (response.status === 201 && response.statusText === "Created") {
+            if (response.status === 201) {
                 resetName();
                 resetFirstname();
                 resetEmail();
