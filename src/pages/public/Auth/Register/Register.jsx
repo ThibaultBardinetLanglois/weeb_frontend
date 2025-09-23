@@ -76,6 +76,12 @@ const Register = () => {
 
             if (err.status === 400 && err.data.non_field_errors) {
                 errorMsg = err.data.non_field_errors[0]; // Display the first message if validation fails
+            }  else {
+                // Retrieve the first error key (ex: "email")
+                const firstKey = Object.keys(err.data)[0];
+                if (firstKey && Array.isArray(err.data[firstKey])) {
+                  errorMsg = err.data[firstKey][0];
+                }
             }
 
             setModalOpen(true);
