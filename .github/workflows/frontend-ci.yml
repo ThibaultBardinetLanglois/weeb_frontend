@@ -1,0 +1,44 @@
+name: CI for the React project
+
+on:
+    push:
+        branches: [main, develop]
+    pull_request:
+        branches: [main, develop]
+
+jobs:
+    test:
+        name: Run tests
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version: [18.x, 20.x]
+
+        steps:
+            - name: 1. Checkout source code
+              uses: actions/checkout@v4
+
+            - name: 2. Setup Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v4
+              with:
+                  node-version: ${{ matrix.node-version }}
+
+            - name: 3. Cache npm dependencies
+              uses: actions/cache@v4
+              with:
+                  path: ~/.npm
+                  key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+                  restore-keys: |
+                      ${{ runner.os }}-node-
+
+            - name: 4. Install dependencies
+              run: npm ci
+
+            - name: 5. Static code analysis (ESLint)
+              run: npm run lint
+
+            - name: 6. Run tests
+              run: npm test -- --watchAll=false
+
+            - name: 7. Build React application
+              run: npm run build
