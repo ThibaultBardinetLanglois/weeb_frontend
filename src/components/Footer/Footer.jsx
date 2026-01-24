@@ -1,25 +1,30 @@
-import { Link } from 'react-router-dom';
-import YoutubeIcon from '../../assets/icons/youtube.svg';
-import FacebookIcon from '../../assets/icons/facebook.svg';
-import TwitterIcon from '../../assets/icons/twitter.svg';
-import InstagramIcon from '../../assets/icons/instagram.svg';
-import LinkedinIcon from '../../assets/icons/linkedin.svg';
-import './Footer.style.scss';
+import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import YoutubeIcon from "../../assets/icons/youtube.svg";
+import FacebookIcon from "../../assets/icons/facebook.svg";
+import TwitterIcon from "../../assets/icons/twitter.svg";
+import InstagramIcon from "../../assets/icons/instagram.svg";
+import LinkedinIcon from "../../assets/icons/linkedin.svg";
+import SentryTestCrash from "../SentryTestCrach/SentryTestCrash";
+import "./Footer.style.scss";
 
 /**
  * Footer Component
- * 
+ *
  * A presentational footer component containing company information,
  * product and resource links, and social media icons.
- * 
+ *
  * Structure:
  * - Top section includes categorized link groups (Product, Solutions, Resources, Company)
  * - Bottom section includes copyright
  *   and social media links (Youtube, Facebook, Twitter, Instagram, LinkedIn)
- * 
+ *
  * @returns {JSX.Element} A footer element with navigational and branding content
  */
 const Footer = () => {
+    const { user, isConnected } = useContext(AuthContext);
+
     return (
         <footer>
             {/* Top part of the footer: navigation and company links */}
@@ -62,10 +67,12 @@ const Footer = () => {
                     </ul>
                 </div>
             </div>
-            
+
             {/* Bottom part of the footer: copyright and social links */}
             <div className="footer-bottom-part">
-                <p className='footer-bottom-part__copyright'>@ 2025 Weeb, Inc. All rights reserved.</p>
+                <p className="footer-bottom-part__copyright">
+                    @ 2025 Weeb, Inc. All rights reserved.
+                </p>
                 <ul className="footer-bottom-part__social-links-block">
                     <li>
                         <Link to="#">
@@ -94,8 +101,13 @@ const Footer = () => {
                     </li>
                 </ul>
             </div>
-        </footer>
-    )
-}
 
-export default Footer
+            {/* Sentry test crash component for error monitoring */}
+            {isConnected && user?.email === "usertest@gmail.com" && (
+                <SentryTestCrash />
+            )}
+        </footer>
+    );
+};
+
+export default Footer;
