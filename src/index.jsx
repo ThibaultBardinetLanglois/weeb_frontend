@@ -3,9 +3,9 @@ import App from "./App.jsx";
 import reportWebVitals from "./reportWebVitals";
 import * as Sentry from "@sentry/react";
 
-if (process.env.NODE_ENV === "production" && process.env.SENTRY_DSN) {
+if (process.env.NODE_ENV === "production" && process.env.REACT_APP_SENTRY_DSN) {
     Sentry.init({
-        dsn: import.meta.env.SENTRY_DSN,
+        dsn: process.env.REACT_APP_SENTRY_DSN,
 
         integrations: [
             // This integration enables performance monitoring.
