@@ -1,3 +1,14 @@
+jest.mock("../../context/AuthContext", () => {
+    const React = require("react");
+
+    return {
+        AuthContext: React.createContext({
+            user: null,
+            isConnected: false,
+        }),
+    };
+});
+
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import Footer from "./Footer";
